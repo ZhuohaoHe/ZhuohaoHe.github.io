@@ -3,4 +3,8 @@ layout: page
 title: Contact
 ---
 
-If you are having any problems, any questions or suggestions, feel free to [tweet at me](https://twitter.com/intent/tweet?text=%40paululele), or [file a GitHub issue](https://github.com/lenpaul/lagrange/issues/new)
+可以通过以下方式联系我：
+
++ Aaaakko's [Github](https://github.com/ZhuohaoHe)
++ Aaaakko's [Zhihu](https://www.zhihu.com/people/he-zhuo-hao-95)
++ Aaaakko's Email : zhuohao.he@outlook.com
