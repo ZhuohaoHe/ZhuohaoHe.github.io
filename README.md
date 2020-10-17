@@ -1,5 +1,8 @@
 ## Bloggggggg
----
+
+博客格式：
+
+```
 layout:     post
 title:      "标题"
 subtitle:   "副标题"
@@ -8,10 +11,10 @@ author:     "HeZh"
 header-img: "img/post-2020-bg.jpg"
 catalog: true
 tags:
-    - A tag
+    - A tag 
     - B tag
-
----
+    
+```
 
 
 
