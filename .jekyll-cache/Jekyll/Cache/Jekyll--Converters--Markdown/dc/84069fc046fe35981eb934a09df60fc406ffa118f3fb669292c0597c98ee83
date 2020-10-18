@@ -1,0 +1,220 @@
+I"l<h2 id="分类logistic回归">分类：Logistic回归</h2>
+
+<p>上一篇文章我们介绍了机器学习中的回归方法，那能否将回归方法直接应用于分类问题呢？</p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/regression-bad-result.jpg" alt="bad result" /></p>
+
+<p><em>蓝色直线</em> : 在前八个数据之前，利用回归来分类，得到的分类结果还是相对准确的。</p>
+
+<p><em>红色直线</em> : 但是当第九个数据出现之后，回归直线由于这一个数据，产生了偏移，出现 $ h(x) &gt; 1 $ 或者 $ h(x) &lt; 0 $ 的情况，很显然分类错误。</p>
+
+<p><em>绿色直线</em> : 正确的分类结果</p>
+
+<p>为了解决 <em>红色直线</em> 的错误分类，出现了 <strong>Logistic回归</strong></p>
+
+<h4 id="logistic-regression">Logistic Regression</h4>
+
+<p>使用 <strong>Logistic回归</strong> 的目的是控制 $ 0 \leq h(x) \leq 1 $ ，原本使用的 $ h_\theta(x) = \theta^Tx $ 不符合要求，所以需要对 $ h_\theta(x) $ 改进，</p>
+
+\[h_\theta(x) = g(\theta^Tx) = \frac{1}{1+e^{-\theta^Tx}}\]
+
+<p>其中，g(z)函数被称为 logistic 函数 或 sigmoid 函数</p>
+
+\[g(z) = \frac{1}{1+e^{-z}}\]
+
+<p><strong>sigmoid 函数的性质</strong></p>
+
+\[g'(z) = g(z)(1-g(z))\]
+
+<p><strong>概率解释</strong></p>
+
+<p>$h_\theta(x)$:对于输入 x ， 输出 y = 1 的可能性</p>
+
+\[P(y=0|x;\theta) + P(y=0|x;\theta) = 1\]
+
+<p><strong>分类边界</strong></p>
+
+<p>由于函数 $ 0 \leq h_\theta(x) \leq 1 $ ,所以，</p>
+
+\[y = \begin{cases}
+	1, if \space h_\theta(x) &gt; 0.5\\
+	0, if \space h_\theta(x) &lt; 0.5
+\end{cases}\]
+
+<p>又有</p>
+
+\[h_\theta(x) = g(\theta^Tx) = \frac{1}{1+e^{-\theta^ Tx}}\]
+
+<p>根据 sigmoid 函数的曲线图像，</p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/sigmoid.jpg" alt="sigmoid" style="zoom: 33%;" /></p>
+
+<p>可以得到分类边界，</p>
+
+\[\begin{cases}
+	\theta^Tx &gt; 0, if \space y = 1\\
+	\theta^Tx &lt; 0, if \space y = 0
+\end{cases}\]
+
+<p>例如下图，$ h_\theta(x) = g(\theta_0 + \theta_1x_1 + \theta_2x_2) $</p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/edge1.jpg" alt="edge1" style="zoom: 25%;" /></p>
+
+<p>如果 $ -3+x_1+x_2 \geq 0 $ , 则预测 “y = 1”</p>
+
+<p>或对于非线性分类边界，$ h_\theta(X) = g(\theta_0+ \theta_1x_1+\theta_2x_2+\theta_3x_1^2+\theta_4x_3^2) $</p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/edge2.jpg" alt="edge2" style="zoom:25%;" /></p>
+
+<p>如果 $ -1+x_1^2+x_2^2\geq0 $, 则预测 “y = 1”</p>
+
+<h4 id="输入">输入</h4>
+
+<ul>
+  <li>
+    <p>每个样本中的 x 都有相应的 y 对应，即样本集</p>
+
+\[\lbrace (x^{(1)}, y^{(1)}), ..., (x^{(n)}, y^{(n)})  \rbrace\]
+  </li>
+  <li>
+    <p>x 有 m 个样本， n 维特征</p>
+  </li>
+</ul>
+
+\[X_{m \times (n+1)} = \left[
+	\begin{matrix}
+	\vec x^{(1)}\\
+	...\\
+	\vec x^{(n)}
+	\end{matrix}
+\right], 其中 \vec x^{(j)} = (1, x_1^{(j)}, ..., x_n^{(j)})\]
+
+<ul>
+  <li>y 有</li>
+</ul>
+
+\[y_{m\times1} = \left[\begin{matrix}
+	y^{(1)}\\
+	...\\
+	y^{(m)}
+\end{matrix}\right]\]
+
+<h4 id="损失函数">损失函数</h4>
+
+<blockquote>
+  <p>能否用线性回归中的平方损失函数？</p>
+
+  <p>不能，因为对于 $ h_\theta(x) $ 来说，平方损失函数是非凸函数，损失函数的最优选择是凸函数，所以我们需要继续寻找更好的损失函数。</p>
+
+  <p>什么是凸函数？
+<img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/convex-function.jpg" alt="convex function" style="zoom: 35%;" /></p>
+</blockquote>
+
+<p>0-1损失函数？</p>
+
+\[l(h_\theta(x), y) = \begin{cases} 
+	1, if {\space} h_\theta(x) \ne y\\
+	0, otherwise
+\end {cases}\]
+
+<p>0-1损失函数是最能准确表达概率的函数，但是由于它是离散的函数，不能够进行优化，所以选择0-1损失函数并不合适。</p>
+
+<blockquote>
+  <p>优化：通过对参数的调整，使得损失函数收敛到最小值，例如上一节的梯度下降法，但是由于函数是离散的，导数等工具都无法使用，所以不能进行优化。</p>
+</blockquote>
+
+<p>用其他损失函数替代0-1损失函数？</p>
+
+<p>最大似然估计！</p>
+
+\[P(y=1|x;\theta) = h_\theta(x) \\
+P(y=0|x;\theta) = 1-h_\theta(x)\]
+
+\[p(y|x;\theta) = (h_\theta(x))^y(1-h_\theta(x))^{1-y}\]
+
+<p>损失函数，</p>
+
+\[L(\theta) = p(y|X;\theta) 
+=\prod^m_{i=1} p(y^{(i)}|x^{(i)};\theta)\\
+=\prod^m_{i=1} (h_\theta(x))^{y^{(i)}}(1-h_\theta(x))^{1-y^{(i)}}\]
+
+<p><strong>Logistic损失函数</strong></p>
+
+\[l(\theta) = -logL(\theta) \\
+=-\left[ \sum^m_{i=1}y^{(i)}log(h_\theta(x^{(i)})) + (1-y^{(i)})log(1-h_\theta(x^{(i)})) \right]\]
+
+\[Cost(h_\theta(x^{(i)}), y) = \begin{cases}
+	-log(h_\theta(x)), \space if \space y = 1 \\
+	-log(1-h_\theta(x)), \space if \space y = 0
+\end{cases}\]
+
+<p>通过图像来验证损失函数的结果，</p>
+
+<p><em>当 y = 1 时， 随着 $ h_\theta(x) $ 逐渐接近1，损失函数逐渐减小</em></p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/loss1.jpg" alt="loss1" style="zoom:30%;" /></p>
+
+<p><em>当 y = 0 时， 随着 $ h_\theta(x) $ 逐渐接近1，损失函数逐渐增大</em></p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/loss2.jpg" alt="loss2" style="zoom:33%;" /></p>
+
+<h4 id="梯度下降">梯度下降</h4>
+
+\[J(\theta) =-\left[ \sum^m_{i=1}y^{(i)}log(h_\theta(x^{(i)})) + (1-y^{(i)})log(1-h_\theta(x^{(i)})) \right]\]
+
+<p>梯度下降模板</p>
+
+<p><code class="language-plaintext highlighter-rouge">repate {</code></p>
+
+\[\theta_j := \theta_j-\alpha \frac{\partial}{\partial\theta_j}J(\theta)\]
+
+<p><code class="language-plaintext highlighter-rouge">}</code></p>
+
+<p>对于 logistic 回归的 $ J(\theta) $ ,求 导数得，</p>
+
+\[\frac{\partial}{\partial\theta_j}J(\theta) = (h_\theta(x)-y)x_j\]
+
+<p><em>推导过程如下图</em></p>
+
+<p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/derivative.jpg" alt="derivative" style="zoom: 33%;" /></p>
+
+<p>所以梯度下降公式可以更新为，</p>
+
+<p><code class="language-plaintext highlighter-rouge">repate {</code></p>
+
+\[\theta_j := \theta_j-\alpha (h_\theta(x)-y)x_j\]
+
+<p><code class="language-plaintext highlighter-rouge">}</code></p>
+
+<p>(注意，$ \theta $ 需要同步更新，即每次都将所有的 $ \theta $ 更新)</p>
+
+<blockquote>
+  <p>利用梯度下降验证：是否能用线性回归中的平方损失？</p>
+
+  <p>有，</p>
+
+\[\begin{cases} 
+J(\theta) = \frac1{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2\\
+\\
+h_\theta(x) = g(\theta^Tx) = \frac{1}{1+e^{-\theta^Tx}}\\
+\\
+g'(z) = g(z)(1-g(z))
+\end{cases}\]
+
+\[\frac{\partial}{\partial\theta_j}J(\theta)=(g(\theta^Tx)-y)g(\theta^Tx)(1-g(\theta^Tx))x_j\]
+
+  <p>推导如下图，</p>
+
+  <p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/derivative.jpg" alt="derivative2" style="zoom:33%;" /></p>
+
+  <p>假设 “y = 0”,</p>
+
+\[if\space h_\theta(x) = 1\space {} \space(far\space form\space target) \rightarrow \frac{\partial}{\partial\theta_j}J(\theta) = 0 \\
+if\space h_\theta(x) = 0\space {} \space(close\space to\space target) \rightarrow \frac{\partial}{\partial\theta_j}J(\theta) = 0\]
+
+  <p>可以发现，当预测结果接近或者原理真实值时，梯度都为0，即并不能总是得到优解。</p>
+
+  <p><img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/square-error.jpg" alt="Square Error" style="zoom:50%;" /></p>
+</blockquote>
+
+:ET

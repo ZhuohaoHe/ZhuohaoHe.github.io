@@ -1,10 +1,15 @@
-I"�<h2 id="线性回归">线性回归</h2>
+I"]<h2 id="线性回归">线性回归</h2>
 
 <h4 id="输入特征">输入特征</h4>
 
 <ul>
   <li>
-    <p>单变量, m × 1 矩阵，其中 m 为样本个数</p>
+    <p>每个样本中的 x 都有相应的 y 对应，即样本集</p>
+
+\[\lbrace (x^{(1)}, y^{(1)}), ..., (x^{(n)}, y^{(n)})  \rbrace\]
+  </li>
+  <li>
+    <p>单个特征, m × 1 矩阵，其中 m 为样本个数</p>
 
 \[X_{m \times 1} = 
 	\left[
@@ -15,7 +20,7 @@
 , \vec x^T = (1,x_1,x_2,...,x_m)\]
   </li>
   <li>
-    <p>多变量, m × (n+1) 矩阵，其中 n 为特征个数，m 为样本个数</p>
+    <p>多个特征, m × (n+1) 矩阵，其中 n 为特征个数，m 为样本个数</p>
 
 \[X_{m \times (n+1)}= 
 	\left[
@@ -31,6 +36,15 @@
 
 \[x_i^{(j)} 表示第i类特征的第j个样本\]
   </li>
+  <li>
+    <p>对应的y</p>
+
+\[y_{m\times1} = \left[\begin{matrix}
+	y^{(1)}\\
+	...\\
+	y^{(m)}
+\end{matrix}\right]\]
+  </li>
 </ul>
 
 <h4 id="选择线性回归模型">选择线性回归模型</h4>
@@ -42,11 +56,12 @@
 \[h_\theta(x)=\theta_0+\theta_1x\]
 
 <ul>
-  <li>多变量，</li>
   <li>
+    <p>多变量，</p>
+
 \[h_\theta(x)^{(1)} = \theta_0+\theta_1x_1^{(1)}+...+\theta_nx_n^{(1)}\\
-  ...\\
-  h_\theta(x)^{(n)} = \theta_0+\theta_1x_1^{(n)}+...+\theta_nx_n^{(n)}\]
+...\\
+h_\theta(x)^{(n)} = \theta_0+\theta_1x_1^{(n)}+...+\theta_nx_n^{(n)}\]
   </li>
   <li>
     <p>都可以用<strong>矩阵</strong>表示</p>
@@ -97,16 +112,19 @@
 <p><strong>三要素</strong>：</p>
 
 <ul>
-  <li>假设:</li>
   <li>
+    <p>假设:</p>
+
 \[h_\theta(x)=\theta_0+\theta_1x\]
   </li>
-  <li>目标函数：</li>
   <li>
+    <p>目标函数：</p>
+
 \[J(\theta_0,\theta_1)=\frac1{2m} \sum_{i=1}^ml(h_\theta(x^{(i)}),y^{(i)})=\frac1{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2\]
   </li>
-  <li>优化算法：给定训练集，如何找到最优的参数 θ 使得</li>
   <li>
+    <p>优化算法：给定训练集，如何找到最优的参数 θ 使得</p>
+
 \[\min_{\theta_0,\theta_1}J(\theta_0,\theta_1)\]
   </li>
 </ul>
@@ -121,13 +139,13 @@
 
 <p>利用泰勒展开证明，</p>
 
-<p><img src="/img/in-post/Regression/proving_process.jpg" alt="proving_process" style="zoom:50%;" /></p>
+<p><img src="/img/in-post/2020-10-16-Regression/proving_process.jpg" alt="proving_process" style="zoom:50%;" /></p>
 
 <ul>
   <li>
     <p><strong>θ0和θ1要同步更新</strong></p>
 
-    <p><img src="/img/in-post/Regression/synchronize.jpg" alt="synchronize" style="zoom:50%;" /></p>
+    <p><img src="/img/in-post/2020-10-16-Regression/synchronize.jpg" alt="synchronize" style="zoom:50%;" /></p>
   </li>
   <li>
     <p><strong>批处理梯度下降</strong></p>
@@ -145,7 +163,7 @@
 
       <p><u>不一定，有可能进入局部最优</u></p>
 
-      <p><img src="/img/in-post/Regression/local_optimum.jpg" alt="local optimum" style="zoom:33%;" /></p>
+      <p><img src="/img/in-post/2020-10-16-Regression/local_optimum.jpg" alt="local optimum" style="zoom:33%;" /></p>
     </li>
     <li>
       <p>能否保证目标函数是收敛的？
@@ -153,7 +171,7 @@
 
       <p><u>不能，有可能到达鞍点，在鞍点导数为0</u></p>
 
-      <p><img src="/img/in-post/Regression/saddle_point.jpg" alt="saddle point" style="zoom:33%;" /></p>
+      <p><img src="/img/in-post/2020-10-16-Regression/saddle_point.jpg" alt="saddle point" style="zoom:33%;" /></p>
     </li>
     <li>
       <p>如何选择参数α(学习率)?</p>
@@ -164,7 +182,7 @@
 
       <p><u>选择收敛条件：如定义收敛为如果 J(θ) 在一次迭代中减少不超过 10^(-3)</u></p>
 
-      <p><img src="/img/in-post/Regression/alpha.jpg" alt="alpha" style="zoom:50%;" /></p>
+      <p><img src="/img/in-post/2020-10-16-Regression/alpha.jpg" alt="alpha" style="zoom:50%;" /></p>
 
       <ul>
         <li>对于足够小的 α，J(θ) 应该在每一次迭代中减小</li>
@@ -172,7 +190,7 @@
         <li>如果 α 太大，梯度下降算法则不会收敛：发散或震荡</li>
       </ul>
 
-      <p><img src="/img/in-post/Regression/alpha2.jpg" alt="alpha2" style="zoom: 33%;" /></p>
+      <p><img src="/img/in-post/2020-10-16-Regression/alpha2.jpg" alt="alpha2" style="zoom: 33%;" /></p>
     </li>
   </ol>
 </blockquote>
@@ -199,8 +217,9 @@
 
     <p>前两种方法的结合</p>
   </li>
-  <li>零均值单位方差归一化</li>
   <li>
+    <p>零均值单位方差归一化</p>
+
 \[\frac{x_i-\mu_i}{\sigma} \rightarrow x\]
   </li>
 </ul>
@@ -246,7 +265,7 @@
 
 <p>推导过程如下图</p>
 
-<p><img src="/img/in-post/Regression/normal_equation.jpg" alt="normal equation" style="zoom:50%;" /></p>
+<p><img src="/img/in-post/2020-10-16-Regression/normal_equation.jpg" alt="normal equation" style="zoom:50%;" /></p>
 
 <p>其中 <code class="language-plaintext highlighter-rouge">tr()</code> 为矩阵的迹</p>
 

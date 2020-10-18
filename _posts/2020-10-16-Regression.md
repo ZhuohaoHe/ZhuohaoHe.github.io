@@ -2,7 +2,7 @@
 layout:     post
 title:      "机器学习笔记--线性回归"
 subtitle:   
-date:       2020-10-17 12:00:00
+date:       2020-10-16 12:00:00
 author:     "HeZh"
 header-img: "img/post-2020-bg.jpg"
 catalog: true
@@ -15,7 +15,13 @@ tags:
 
 #### 输入特征
 
-+ 单变量, m × 1 矩阵，其中 m 为样本个数
++ 每个样本中的 x 都有相应的 y 对应，即样本集
+
+  $$
+  \lbrace (x^{(1)}, y^{(1)}), ..., (x^{(n)}, y^{(n)})  \rbrace
+  $$
+
++ 单个特征, m × 1 矩阵，其中 m 为样本个数
 
   $$
   X_{m \times 1} = 
@@ -27,7 +33,7 @@ tags:
   , \vec x^T = (1,x_1,x_2,...,x_m)
   $$
   
-+ 多变量, m × (n+1) 矩阵，其中 n 为特征个数，m 为样本个数
++ 多个特征, m × (n+1) 矩阵，其中 n 为特征个数，m 为样本个数
 
   $$
   X_{m \times (n+1)}= 
@@ -46,6 +52,17 @@ tags:
 	$$
 	x_i^{(j)} 表示第i类特征的第j个样本
 	$$
+	
++ 对应的y
+
+  $$
+  y_{m\times1} = \left[\begin{matrix}
+  	y^{(1)}\\
+  	...\\
+  	y^{(m)}
+  \end{matrix}\right]
+  $$
+  
 
 #### 选择线性回归模型
 
@@ -56,7 +73,7 @@ h_\theta(x)=\theta_0+\theta_1x
 $$
 
 + 多变量，
-+ 
+
   $$
   h_\theta(x)^{(1)} = \theta_0+\theta_1x_1^{(1)}+...+\theta_nx_n^{(1)}\\
   ...\\
@@ -66,7 +83,7 @@ $$
 + 都可以用**矩阵**表示
 
   $$
-  h_\theta(x) = X_{m \times (n+1)} \space \Theta_{(n+1) \times 1}
+  h_\theta(x) = X_{m \times (n+1)} \space \Theta_{(n+1) \times 1} 
   $$
   
   其中 Θ 矩阵为,
@@ -110,19 +127,19 @@ $$
 **三要素**：
 
 + 假设:
-+ 
+
 	$$
 	h_\theta(x)=\theta_0+\theta_1x
 	$$
 	
 + 目标函数：
-+ 
+
 	$$
 	J(\theta_0,\theta_1)=\frac1{2m} \sum_{i=1}^ml(h_\theta(x^{(i)}),y^{(i)})=\frac1{2m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})^2
 	$$
 	
 + 优化算法：给定训练集，如何找到最优的参数 θ 使得
-+ 
+
 	$$
 	\min_{\theta_0,\theta_1}J(\theta_0,\theta_1)
 	$$
@@ -140,11 +157,11 @@ $$
 
 利用泰勒展开证明，
 
-<img src="/img/in-post/Regression/proving_process.jpg" alt="proving_process" style="zoom:50%;" />
+<img src="/img/in-post/2020-10-16-Regression/proving_process.jpg" alt="proving_process" style="zoom:50%;" />
 
 + **θ0和θ1要同步更新**
 
-  <img src="/img/in-post/Regression/synchronize.jpg" alt="synchronize" style="zoom:50%;" />
+  <img src="/img/in-post/2020-10-16-Regression/synchronize.jpg" alt="synchronize" style="zoom:50%;" />
 
 + **批处理梯度下降**
 
@@ -156,14 +173,14 @@ $$
 >
 >    <u>不一定，有可能进入局部最优</u>
 >
->    <img src="/img/in-post/Regression/local_optimum.jpg" alt="local optimum" style="zoom:33%;" />
+>    <img src="/img/in-post/2020-10-16-Regression/local_optimum.jpg" alt="local optimum" style="zoom:33%;" />
 >
 > 2. 能否保证目标函数是收敛的？
 >      即：梯度下降法参数更新能是否保证目标函数的值下降?
 >
 >      <u>不能，有可能到达鞍点，在鞍点导数为0</u>
 >
->      <img src="/img/in-post/Regression/saddle_point.jpg" alt="saddle point" style="zoom:33%;" />
+>      <img src="/img/in-post/2020-10-16-Regression/saddle_point.jpg" alt="saddle point" style="zoom:33%;" />
 >
 > 3. 如何选择参数α(学习率)?
 >
@@ -173,13 +190,13 @@ $$
 >
 >      <u>选择收敛条件：如定义收敛为如果 J(θ) 在一次迭代中减少不超过 10^(-3)</u>
 >
->      <img src="/img/in-post/Regression/alpha.jpg" alt="alpha" style="zoom:50%;" />
+>      <img src="/img/in-post/2020-10-16-Regression/alpha.jpg" alt="alpha" style="zoom:50%;" />
 >
 >      + 对于足够小的 α，J(θ) 应该在每一次迭代中减小
 >      + 如果 α 太小，梯度下降算法会收敛很慢
 >      + 如果 α 太大，梯度下降算法则不会收敛：发散或震荡
 >
->      <img src="/img/in-post/Regression/alpha2.jpg" alt="alpha2" style="zoom: 33%;" />
+>      <img src="/img/in-post/2020-10-16-Regression/alpha2.jpg" alt="alpha2" style="zoom: 33%;" />
 
 #### 特征尺度归一化
 
@@ -200,7 +217,7 @@ $$
   前两种方法的结合
 
 + 零均值单位方差归一化
-+ 
+
   $$
   \frac{x_i-\mu_i}{\sigma} \rightarrow x
   $$
@@ -254,7 +271,7 @@ $$
 
 推导过程如下图
 
-<img src="/img/in-post/Regression/normal_equation.jpg" alt="normal equation" style="zoom:50%;" />
+<img src="/img/in-post/2020-10-16-Regression/normal_equation.jpg" alt="normal equation" style="zoom:50%;" />
 
 其中 `tr()` 为矩阵的迹
 
