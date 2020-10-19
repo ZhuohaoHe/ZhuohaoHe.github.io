@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "机器学习笔记-- Logistic 回归"
+title:      "机器学习笔记--Logistic回归"
 subtitle:   
 date:       2020-10-18 12:00:00
 author:     "HeZh"
@@ -8,9 +8,8 @@ header-img: "img/post-2020-bg.jpg"
 catalog: true
 tags:
     - Machine Learning
-    -  Logistic Regression
-    -  Classification
-
+    - Logistic Regression
+    - Classification
 ---
 
 ## 分类：Logistic回归
@@ -220,6 +219,10 @@ $$
 
 <img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/derivative.jpg" alt="derivative" style="zoom: 33%;" />
 
+> 似乎和上一节的线性回归相同？是否真的相同呢？
+>
+> ？？？
+
 所以梯度下降公式可以更新为，
 
 `repate {`
@@ -255,7 +258,7 @@ $$
 > <img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/derivative.jpg" alt="derivative2" style="zoom:33%;" />
 >
 > 假设 "y = 0", 
->
+> 
 > $$
 > if\space h_\theta(x) = 1\space {} \space(far\space form\space target) \rightarrow \frac{\partial}{\partial\theta_j}J(\theta) = 0 \\
 > if\space h_\theta(x) = 0\space {} \space(close\space to\space target) \rightarrow \frac{\partial}{\partial\theta_j}J(\theta) = 0
@@ -265,5 +268,67 @@ $$
 >
 > <img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/square-error.jpg" alt="Square Error" style="zoom:50%;" />
 
+#### Softmax Regression
 
+在现实生活中，我们遇到的问题，往往都不是简单的二分类问题，而是更为复杂的多分类问题，而我们目前学到的知识，没有办法直接解决一个多分类问题。
 
+虽然无法直接多分类，但是可以将多分类转换成多个二分类，即转换成多个一对多的分类，如下图。
+
+<img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/one2many.jpg" alt="one2many" style="zoom: 40%;" />
+
+为每类训练一个逻辑回归分类器 $ h_{\theta^i}(x) $ 用来预测 $ y = i $ 的可能性.
+对于一个新输入 x , 做一个预测, 选择一个类别 i , 使得：
+
+$$
+\max_ih_{\theta^i}(x)
+$$
+
+但是由于 $ \sum h_{\theta^i}(x) \ne 1 $ ，所以概率之和不为1，并不能很明确的对概率进行比较，所以需要引入 **Softmax Regression**
+
+$$
+p(y=i|x;\theta) = h_{\theta^i}(x) = \frac{e^{(\theta^i)^T}x}{\sum_{j=1}^K{e^{(\theta^i)^T}x}}
+$$
+
+令 $ z = (\theta^i)^Tx $ 得，
+
+$$
+p(y=i|x;\theta) = h_{\theta^i}(x) = \frac {e^z} {\sum_{j=1}^K{e^z}}
+$$
+
+用对数似然估计得，
+
+$$
+L(\theta) = \sum^m_{i=1}log(p(y=i|x;\theta))\\
+=\sum^m_{i=1}log(\frac {e^{z_{y^{(i)}}}} {\sum_{j=1}^K{e^{z_{y^{(i)}}}}})
+$$
+
+损失函数为，
+
+$$
+loss(\theta) = -L(\theta) = -\sum^m_{i=1}log(\frac {e^{z_{y^{(i)}}}} {\sum_{j=1}^K{e^{z_{y^{(i)}}}}})\\
+=\sum^m_{i=1}\left[ log(\sum_{j=1}^K{e^{z_j}})-z_{y^{(i)}} \right]
+$$
+
+所以，单个样本 i 对应得损失为，
+
+$$
+loss_i(\theta)=log(\sum_{j=1}^K{e^{z_j}})-z_{y^{(i)}}
+$$
+
+>$ loss_i $ 的取值范围是多少？
+>
+>因为 $ loss_i(\theta) = -log(h_{\theta^i}(x)) $
+>
+>而 $ 0 \leq h_{\theta^i}(x) \leq 1 $, 所以 $ loss_i \geq 0$
+>
+>初始化每类的参数 $ \theta^l \approx 0 $, $ loss_i = ? $
+>
+>? ? ? 
+
+**Softmax Regression 流程**
+
+<img src="/img/in-post/2020-10-18-Classification-Logistic-Regression/softmax-regression.jpg" alt="softmax-regression" style="zoom:40%;" />
+
++ 利用 Softmax Regression 处理多个类，让多个类的概率和等于1
+
++ 利用 Cross Entropy 计算 loss 函数
