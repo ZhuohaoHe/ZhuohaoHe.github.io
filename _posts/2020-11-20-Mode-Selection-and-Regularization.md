@@ -1,6 +1,5 @@
-
-
 ---
+
 layout:     post
 title:      "机器学习笔记--模型选择与正则化"
 subtitle:   
@@ -10,10 +9,8 @@ header-img: "img/post-2020-bg.jpg"
 catalog: true
 tags:
     - Machine Learning
-        - Regularization
-
+	- Regularization
 ---
-
 
 ## 模型选择与正则化 (Model Selection  &  Regularization)
 
