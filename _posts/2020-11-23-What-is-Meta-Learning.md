@@ -55,42 +55,45 @@ tags:
 ##### 定义 Meta-Learning 的表现好坏 (Loss function)
 
 对于普通的机器学习，我们通过比较模型的输出和真实的 label 得到 loss ， 来评估模型的好坏，但是对于元学习，我们需要评估的不是多个数据，而是**多个任务**。我们需要输入多个任务，让模型针对不同的任务训练出对应解决任务的模型，再判断这些模型在其对应任务上的好坏，将最后的 loss 加和得到元学习模型的 loss，
+
 $$
 Loss(F) = \sum_{n=1}^Nloss^{n}
 $$
+
 其中 $ F $ 代表元学习的模型， $ loss ^n$ 代表元学习模型对应任务 n 训练处的模型的 loss 。
 
-> 这里我们可以发现机器学习和元学习的训练集和测试集差别很大
-> $$
-> \begin{cases}
-> 	\text{Mechine Learning:  } 
-> 	\begin{cases}
-> 		\text{Training Set:  } \ {(data,label)}
-> 		\\
-> 		\text{Testing Set:  } \ {(data, label)}
-> 	\end{cases}
-> 	\\
-> 	\\
->     \text{Meta Learning:  } \ (task)
->     	\begin{cases}
->     		\text{task 1: } 	
->     		\begin{cases}
->                 \text{Support Set:  } \ {(data,label)}
->                 \\
->                 \text{Query Set:  } \ {(data, label)}
->                \end{cases}
->     		\\
->     		\text{...}
->     		\\
->     		\text{task n: } 
->     				\begin{cases}
->                         \text{Support Set:  } \ {(data,label)}
->                         \\
->                         \text{Query Set:  } \ {(data, label)}
->                     \end{cases}
->     	\end{cases}
-> \end{cases}
-> $$
+这里我们可以发现机器学习和元学习的训练集和测试集差别很大
+ 
+$$
+\begin{cases}
+	\text{Mechine Learning:  } 
+	\begin{cases}
+		\text{Training Set:  } \ {(data,label)}
+		\\
+		\text{Testing Set:  } \ {(data, label)}
+	\end{cases}
+	\\
+	\\
+    \text{Meta Learning:  } \ (task)
+    	\begin{cases}
+    		\text{task 1: } 	
+    		\begin{cases}
+                \text{Support Set:  } \ {(data,label)}
+                \\
+                \text{Query Set:  } \ {(data, label)}
+               \end{cases}
+    		\\
+    		\text{...}
+    		\\
+    		\text{task n: } 
+    				\begin{cases}
+                        \text{Support Set:  } \ {(data,label)}
+                        \\
+                        \text{Query Set:  } \ {(data, label)}
+                    \end{cases}
+    	\end{cases}
+\end{cases}
+$$
 
 ##### 选择最好模型
 
@@ -99,10 +102,12 @@ F^* = \arg\min_F Loss(F)
 $$
 
 选择到 loss 最小的 Meta Learning 模型后，利用新的 Task 来测试他的好坏。
+
 $$
 \text{Train(New Task)}  \stackrel{F^*}{\longrightarrow} f^*\\
 \text{Test(New Task)} \stackrel{f^*}{\longrightarrow} loss
 $$
+
 利用新的任务去训练模型，得到解决这个任务的模型，再用测试集去测试这个训练出的任务，判断最终的好坏。
 
 ### 元学习的几种算法
@@ -112,9 +117,11 @@ $$
 面对上文提到的由人工设计的那几个步骤，MAML 主要专注于学习初始的参数(initialization parameter)。
 
 在 MAML 中的 loss function 为：
+
 $$
 L(\phi) = \sum^N_{n=1} l^n(\hat{\theta}^n)
 $$
+
 其中, 
 
 + $\phi$ 为我们的最终目标的初始化参数
@@ -134,9 +141,11 @@ $$
 > + 数据量有限制
 
 梯度下降：
+
 $$
 \phi \leftarrow \phi - \alpha \nabla_\phi L(\phi)
 $$
+
 图解 MAML 参数的学习过程：
 
 + 绿色：$ \phi^0 $ 在 task m 中训练一步，得到 $ \hat \theta ^ m $ ，之后再训练一步，得到 $\phi ^ 0$ 的更新方向
