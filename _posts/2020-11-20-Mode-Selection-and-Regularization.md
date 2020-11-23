@@ -2,7 +2,7 @@
 layout:     post
 title:      "机器学习笔记--模型选择与正则化"
 subtitle:   
-date:       2020-10-18 12:00:00
+date:       2020-11-22 12:00:00
 author:     "HeZh"
 header-img: "img/post-2020-bg.jpg"
 catalog: true
