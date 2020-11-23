@@ -63,7 +63,7 @@ $$
 其中 $ F $ 代表元学习的模型， $ loss ^n$ 代表元学习模型对应任务 n 训练处的模型的 loss 。
 
 这里我们可以发现机器学习和元学习的训练集和测试集差别很大
- 
+
 $$
 \begin{cases}
 	\text{Mechine Learning:  } 
@@ -166,7 +166,7 @@ $$
 
 Reptile 也是针对初始参数学习，但相比 MAML 要更加简单。
 
-![Reptile](/home/hezhuohao/ZhuohaoHe.github.io/img/in-post/2020-11-23-What-is-Meta-Learning/reptile.png)
+![Reptile](/img/in-post/2020-11-23-What-is-Meta-Learning/reptile.png)
 
 + 绿色：$ \phi^0 $ 在 task m 中训练(不只训练一步，而是训练结束)，得到 $ \hat \theta ^ m $ 
 
@@ -184,6 +184,6 @@ Reptile 也是针对初始参数学习，但相比 MAML 要更加简单。
 
 > 参考资料：
 >
-> Meta Learning - MAML   --Hung-yi Lee https://www.youtube.com/watch?v=EkAqYbpCYAc
+> [Meta Learning - MAML   --Hung-yi Lee](https://www.youtube.com/watch?v=EkAqYbpCYAc)
 >
-> Tuning Hyperparameters   --Hung-yi Lee https://www.youtube.com/watch?v=c10nxBcSH14
+> [Tuning Hyperparameters   --Hung-yi Lee](https://www.youtube.com/watch?v=c10nxBcSH14) 

@@ -112,7 +112,7 @@ $$
 >
 > 参考文章：
 >
-> L1正则化与L2正则化 - bingo酱的文章 - 知乎 https://zhuanlan.zhihu.com/p/35356992
+> [L1正则化与L2正则化 - bingo酱的文章 - 知乎]( https://zhuanlan.zhihu.com/p/35356992)
 
 其中 $\lambda$ 被叫做正则化因子，通过对正则化因子的设置，可以有效的降低过拟合。
 
@@ -223,7 +223,7 @@ $$
 >
 > 参考：
 >
-> 深度学习中训练集与测试集同一分布如何理解？ - 努力奔跑的小明的回答 - 知乎 https://www.zhihu.com/question/285978032/answer/565024440
+> [深度学习中训练集与测试集同一分布如何理解？ - 努力奔跑的小明的回答 - 知乎](https://www.zhihu.com/question/285978032/answer/565024440) 
 
 + 验证集通常有 1000~10000 个数据组成，需要足够大。
 + 测试集通常占总数据量的 30%, 在有大量数据的情况下越大越好
@@ -251,4 +251,4 @@ $$
 >
 > 参考链接：
 >
-> 训练集(train)验证集(validation)测试集(test)与交叉验证法 - Ph0en1x的文章 - 知乎 https://zhuanlan.zhihu.com/p/35394638
+> [训练集(train)验证集(validation)测试集(test)与交叉验证法 - Ph0en1x的文章 - 知乎](https://zhuanlan.zhihu.com/p/35394638) 
