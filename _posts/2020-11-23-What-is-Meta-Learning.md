@@ -197,6 +197,7 @@ Reptile 也是针对初始参数学习，但相比 MAML 要更加简单。
 > top K result are good enough
 
 那么，随机选取的结果就可以做到速度快而且效果好。证明如下：
+
 $$
 \text{假设有 N 个点，选取一个点是前 K 个的概率是} \frac K {N} \\
 \text{选取 x 次，选到前 K 个的概率为  } 1-(1-\frac K {N})^x \\
